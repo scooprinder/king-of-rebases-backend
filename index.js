@@ -44,7 +44,7 @@ app.get('/', async (req, res) => {
 
     const result = {
         starting_data : {
-            timestamp : 0,
+            timestamp : process.env.TIMESTAMP,
             ohm,
             time,
             klima

@@ -5,19 +5,19 @@ let app = express();
 const ohm = {
     price : process.env.OHM_STARTING_DOLLAR,
     index : process.env.OHM_STARTING_INDEX,
-    tokens: process.env.OHM_STARTING_TOKEN
+    balance: process.env.OHM_STARTING_TOKEN
 }
 
 const time = {
     price : process.env.TIME_STARTING_DOLLAR,
     index : process.env.TIME_STARTING_INDEX,
-    tokens: process.env.TIME_STARTING_TOKEN
+    balance: process.env.TIME_STARTING_TOKEN
 } 
 
 const klima = {
     price : process.env.KLIMA_STARTING_DOLLAR,
     index : process.env.KLIMA_STARTING_INDEX,
-    tokens: process.env.KLIMA_STARTING_TOKEN
+    balance: process.env.KLIMA_STARTING_TOKEN
 }
 
 const { Client } = require('pg');
@@ -52,19 +52,19 @@ app.get('/', async (req, res) => {
         current_data : {
             timestamp: dbData.timestamp,
             ohm: {
-                index: dbData.ohm_index,
                 price: dbData.ohm_price,
-                token: dbData.ohm_token
+                index: dbData.ohm_index,
+                balance: dbData.ohm_token
             },
             time: {
-                index: dbData.time_index,
                 price: dbData.time_price,
-                token: dbData.time_token
+                index: dbData.time_index,
+                balance: dbData.time_token
             },
             klima: {
-                index: dbData.klima_index,
                 price: dbData.klima_price,
-                token: dbData.klima_token
+                index: dbData.klima_index,
+                balance: dbData.klima_token
             }
         }
     }

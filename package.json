@@ -1,0 +1,26 @@
+{
+  "name": "king-of-rebases-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "ethers": "^5.5.1",
+    "express": "^5.0.0-alpha.8",
+    "pg": "^8.7.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scooprinder/king-of-rebases-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scooprinder/king-of-rebases-backend/issues"
+  },
+  "homepage": "https://github.com/scooprinder/king-of-rebases-backend#readme"
+}

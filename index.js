@@ -32,7 +32,7 @@ const client = new Client({
 client.connect();
 
 async function getLatestFromDB() {
-    return client.query('SELECT id, ohm_index, ohm_price, ohm_token, time_index, time_price, time_token, klima_price, klima_index, klima_token FROM public.indexes order by id desc limit 1;')
+    return client.query('SELECT id, timestamp, ohm_index, ohm_price, ohm_token, time_index, time_price, time_token, klima_price, klima_index, klima_token FROM public.indexes order by id desc limit 1;')
     .then(res => {
         return res.rows[0]
     })
@@ -44,11 +44,13 @@ app.get('/', async (req, res) => {
 
     const result = {
         starting_data : {
+            timestamp : 0,
             ohm,
             time,
             klima
         },
         current_data : {
+            timestamp: dbData.timestamp,
             ohm: {
                 index: dbData.ohm_index,
                 price: dbData.ohm_price,

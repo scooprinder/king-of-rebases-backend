@@ -1,6 +1,24 @@
 const axios = require('axios');
 const { ethers } = require("ethers");
 
+const ohm = {
+    price : process.env.OHM_STARTING_DOLLAR,
+    index : process.env.OHM_STARTING_INDEX,
+    balance: process.env.OHM_STARTING_TOKEN
+}
+
+const time = {
+    price : process.env.TIME_STARTING_DOLLAR,
+    index : process.env.TIME_STARTING_INDEX,
+    balance: process.env.TIME_STARTING_TOKEN
+} 
+
+const klima = {
+    price : process.env.KLIMA_STARTING_DOLLAR,
+    index : process.env.KLIMA_STARTING_INDEX,
+    balance: process.env.KLIMA_STARTING_TOKEN
+}
+
 async function getTimeIndex() {
     const payload = {
         method:"eth_call",
@@ -103,17 +121,23 @@ async function insert(time, ohm, klima, prices, client) {
     // (newest index /previous index) - 1
     const ohm_rebase = (ohm / prev.ohm_index) - 1
     const ohm_tokens = prev.ohm_token * (1 + ohm_rebase)
+    const ohm_value = ohm_tokens * prices.olympus.usd
+    const ohm_pnl = ((prices.olympus.usd - ohm.price) / ohm.price) * 100
 
     const time_rebase = (time / prev.time_index) - 1
     const time_tokens = prev.time_token * (1 + time_rebase)
+    const time_value = time_tokens * prices.wonderland.usd
+    const time_pnl = ((prices.wonderland.usd - time.price) / time.price) * 100
 
     const klima_rebase = (klima / prev.klima_index) - 1
     const klima_tokens = prev.klima_token * (1 + klima_rebase)
+    const klima_value = klima_tokens * prices['klima-dao'].usd
+    const klima_pnl = ((prices['klima-dao'].usd - klima.price) / klima.price) * 100   
 
-    const text = 'INSERT INTO public.indexes(timestamp, ohm_index, ohm_price, ohm_token, time_index, time_price, time_token, klima_index, klima_price, klima_token) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);'
-    const values = [Date.now(), ohm, prices.olympus.usd, ohm_tokens,
-                    time, prices.wonderland.usd, time_tokens,
-                    klima, prices['klima-dao'].usd, klima_tokens]
+    const text = 'INSERT INTO public.indexes(timestamp, ohm_index, ohm_price, ohm_token, ohm_value, ohm_pnl, time_index, time_price, time_token, time_value, time_pnl, klima_index, klima_price, klima_token, klima_value, klima_pnl) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16);'
+    const values = [Date.now(), ohm, prices.olympus.usd, ohm_tokens, ohm_value ,ohm_pnl,
+                    time, prices.wonderland.usd, time_tokens, time_value ,time_pnl,
+                    klima, prices['klima-dao'].usd, klima_tokens, klima_value, klima_pnl]
 
    return client
     .query(text, values)

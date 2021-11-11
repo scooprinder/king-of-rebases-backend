@@ -40,7 +40,7 @@ const client = new Client({
 client.connect();
 
 async function getLatestFromDB() {
-    return client.query('SELECT id, round(ohm_index::numeric,2) as ohm_index, ohm_price, round(time_index::numeric,2) as time_index, time_price, klima_price, round(klima_index::numeric,2) as klima_index, round(ohm_token::numeric,2) as ohm_token, round(time_token::numeric,2) as time_token, round(klima_token::numeric,2) as klima_token, "timestamp", round(ohm_value::numeric,2) as ohm_value, round(time_value::numeric,2) as time_value, round(klima_value::numeric,2) as klima_value, round(ohm_pnl::numeric,2) as ohm_pnl, round(time_pnl::numeric,2) as time_pnl, round(klima_pnl::numeric,2) as klima_pnl FROM public.indexes order by id desc limit 1;')
+    return client.query('SELECT id, round(ohm_index::numeric,2) as ohm_index, ohm_price, round(time_index::numeric,2) as time_index, time_price, klima_price, round(klima_index::numeric,2) as klima_index, round(ohm_token::numeric,5) as ohm_token, round(time_token::numeric,5) as time_token, round(klima_token::numeric,5) as klima_token, "timestamp", round(ohm_value::numeric,2) as ohm_value, round(time_value::numeric,2) as time_value, round(klima_value::numeric,2) as klima_value, round(ohm_pnl::numeric,2) as ohm_pnl, round(time_pnl::numeric,2) as time_pnl, round(klima_pnl::numeric,2) as klima_pnl FROM public.indexes order by id desc limit 1;')
     .then(res => {
         return res.rows[0]
     })

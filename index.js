@@ -3,27 +3,22 @@ let PORT = process.env.PORT || '5000';
 
 let app = express();
 
-function round(num) {
-    var m = Number((Math.abs(num) * 100).toPrecision(15));
-    return Math.round(m) / 100 * Math.sign(num);
-}
-
 const ohm = {
-    price : round(process.env.OHM_STARTING_DOLLAR),
-    index : round(process.env.OHM_STARTING_INDEX),
-    balance: round(process.env.OHM_STARTING_TOKEN)
+    price : process.env.OHM_STARTING_DOLLAR,
+    index : process.env.OHM_STARTING_INDEX,
+    balance: process.env.OHM_STARTING_TOKEN
 }
 
 const time = {
-    price : round(process.env.TIME_STARTING_DOLLAR),
-    index : round(process.env.TIME_STARTING_INDEX),
-    balance: round(process.env.TIME_STARTING_TOKEN)
+    price : process.env.TIME_STARTING_DOLLAR,
+    index : process.env.TIME_STARTING_INDEX,
+    balance: process.env.TIME_STARTING_TOKEN
 } 
 
 const klima = {
-    price : round(process.env.KLIMA_STARTING_DOLLAR),
-    index : round(process.env.KLIMA_STARTING_INDEX),
-    balance: round(process.env.KLIMA_STARTING_TOKEN)
+    price : process.env.KLIMA_STARTING_DOLLAR,
+    index : process.env.KLIMA_STARTING_INDEX,
+    balance: process.env.KLIMA_STARTING_TOKEN
 }
 
 

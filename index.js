@@ -2,23 +2,31 @@ let express = require('express');
 let PORT = process.env.PORT || '5000';
 
 let app = express();
+
+function round(num) {
+    var m = Number((Math.abs(num) * 100).toPrecision(15));
+    return Math.round(m) / 100 * Math.sign(num);
+}
+
 const ohm = {
-    price : process.env.OHM_STARTING_DOLLAR,
-    index : process.env.OHM_STARTING_INDEX,
-    balance: process.env.OHM_STARTING_TOKEN
+    price : round(process.env.OHM_STARTING_DOLLAR),
+    index : round(process.env.OHM_STARTING_INDEX),
+    balance: round(process.env.OHM_STARTING_TOKEN)
 }
 
 const time = {
-    price : process.env.TIME_STARTING_DOLLAR,
-    index : process.env.TIME_STARTING_INDEX,
-    balance: process.env.TIME_STARTING_TOKEN
+    price : round(process.env.TIME_STARTING_DOLLAR),
+    index : round(process.env.TIME_STARTING_INDEX),
+    balance: round(process.env.TIME_STARTING_TOKEN)
 } 
 
 const klima = {
-    price : process.env.KLIMA_STARTING_DOLLAR,
-    index : process.env.KLIMA_STARTING_INDEX,
-    balance: process.env.KLIMA_STARTING_TOKEN
+    price : round(process.env.KLIMA_STARTING_DOLLAR),
+    index : round(process.env.KLIMA_STARTING_INDEX),
+    balance: round(process.env.KLIMA_STARTING_TOKEN)
 }
+
+
 
 const { Client } = require('pg');
 
@@ -32,7 +40,7 @@ const client = new Client({
 client.connect();
 
 async function getLatestFromDB() {
-    return client.query('SELECT id, ohm_index, ohm_price, time_index, time_price, klima_price, klima_index, ohm_token, time_token, klima_token, "timestamp", ohm_value, time_value, klima_value, ohm_pnl, time_pnl, klima_pnl FROM public.indexes order by id desc limit 1;')
+    return client.query('SELECT id, round(ohm_index::numeric,2) as ohm_index, ohm_price, round(time_index::numeric,2) as time_index, time_price, klima_price, round(klima_index::numeric,2) as klima_index, round(ohm_token::numeric,2) as ohm_token, round(time_token::numeric,2) as time_token, round(klima_token::numeric,2) as klima_token, "timestamp", round(ohm_value::numeric,2) as ohm_value, round(time_value::numeric,2) as time_value, round(klima_value::numeric,2) as klima_value, round(ohm_pnl::numeric,2) as ohm_pnl, round(time_pnl::numeric,2) as time_pnl, round(klima_pnl::numeric,2) as klima_pnl FROM public.indexes order by id desc limit 1;')
     .then(res => {
         return res.rows[0]
     })
@@ -75,9 +83,6 @@ app.get('/', async (req, res) => {
             }
         }
     }
-
-    console.log(result);
-
     res.json(result)
 })
 

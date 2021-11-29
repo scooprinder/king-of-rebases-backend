@@ -1,7 +1,9 @@
 let express = require('express');
+var cors = require('cors')
 let PORT = process.env.PORT || '5000';
 
 let app = express();
+app.use(cors())
 
 const ohm = {
     price : process.env.OHM_STARTING_DOLLAR,

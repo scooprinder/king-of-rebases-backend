@@ -87,7 +87,7 @@ async function getOhmIndex() {
         jsonrpc:"2.0"
     }
     
-    return axios.post("https://api.olympusdao.finance/", JSON.stringify(payload), {
+    return axios.post(process.env.MAINNET_INFURA, JSON.stringify(payload), {
         headers: {
             //'authority' : "polygon-rpc.com",
             'content-type' : 'application/json'

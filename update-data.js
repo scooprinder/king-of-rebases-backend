@@ -19,6 +19,8 @@ const start_klima = {
     balance: process.env.KLIMA_STARTING_TOKEN
 }
 
+const invested = 10000;
+
 async function getTimeIndex() {
     const payload = {
         method:"eth_call",
@@ -122,17 +124,17 @@ async function insert(time, ohm, klima, prices, client) {
     const ohm_rebase = (ohm / prev.ohm_index) - 1
     const ohm_tokens = prev.ohm_token * (1 + ohm_rebase)
     const ohm_value = ohm_tokens * prices.olympus.usd
-    const ohm_pnl = ((prices.olympus.usd - start_ohm.price) / start_ohm.price) * 100
+    const ohm_pnl = ((ohm_value - invested) / invested) * 100
 
     const time_rebase = (time / prev.time_index) - 1
     const time_tokens = prev.time_token * (1 + time_rebase)
     const time_value = time_tokens * prices.wonderland.usd
-    const time_pnl = ((prices.wonderland.usd - start_time.price) / start_time.price) * 100
+    const time_pnl = ((time_value - invested) / invested) * 100
 
     const klima_rebase = (klima / prev.klima_index) - 1
     const klima_tokens = prev.klima_token * (1 + klima_rebase)
     const klima_value = klima_tokens * prices['klima-dao'].usd
-    const klima_pnl = ((prices['klima-dao'].usd - start_klima.price) / start_klima.price) * 100   
+    const klima_pnl = ((klima_value - invested) / invested) * 100   
 
     const text = 'INSERT INTO public.indexes(timestamp, ohm_index, ohm_price, ohm_token, ohm_value, ohm_pnl, time_index, time_price, time_token, time_value, time_pnl, klima_index, klima_price, klima_token, klima_value, klima_pnl) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16);'
     const values = [Date.now(), ohm, prices.olympus.usd, ohm_tokens, ohm_value ,ohm_pnl,

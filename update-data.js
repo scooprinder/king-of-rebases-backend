@@ -2,19 +2,19 @@ const axios = require('axios');
 const { ethers } = require("ethers");
 
 const start_ohm = {
-    price : 889.48,
+    price : process.env.OHM_STARTING_DOLLAR,
     index : process.env.OHM_STARTING_INDEX,
     balance: process.env.OHM_STARTING_TOKEN
 }
 
 const start_time = {
-    price : 7934.66,
+    price : process.env.TIME_STARTING_DOLLAR,
     index : process.env.TIME_STARTING_INDEX,
     balance: process.env.TIME_STARTING_TOKEN
 } 
 
 const start_klima = {
-    price : 1886.85,
+    price : process.env.KLIMA_STARTING_DOLLAR,
     index : process.env.KLIMA_STARTING_INDEX,
     balance: process.env.KLIMA_STARTING_TOKEN
 }

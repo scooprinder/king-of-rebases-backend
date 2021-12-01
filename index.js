@@ -49,7 +49,7 @@ app.get('/', async (req, res) => {
 
     const result = {
         starting_data : {
-            investedAmount: 1000,
+            investedAmount: 10000,
             timestamp : process.env.TIMESTAMP,
             ohm,
             time,
